@@ -34,14 +34,25 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"
 
   frontend:
     build: ./frontend
     container_name: spendwise_frontend
     depends_on:
       - backend
+    expose:
+      - "80"
+
+  nginx:
+    image: nginx:alpine
+    container_name: spendwise_nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - backend
+      - frontend
     ports:
       - "80:80"
 
