@@ -3,11 +3,11 @@ resource "aws_security_group" "spendwise_sg" {
   description = "Security group for SpendWise EC2 instance"
 
   ingress {
-    description = "SSH from my IP"
+    description = "SSH (key-auth required)"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["${chomp(data.http.my_ip.response_body)}/32"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
